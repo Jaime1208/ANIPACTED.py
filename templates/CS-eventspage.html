@@ -1,0 +1,118 @@
+{% extends "baseCS.html" %}
+{% block title %}ANIPACTED - Homepage{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anipacted CUstomer Events Overview</title>
+    <style>
+.ovmain {
+  width: auto;
+  height: 100%;
+  display: grid;
+  overflow: hidden;
+  background: #231561;
+  padding: none;
+}
+
+.butt {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  margin-left: 30px;
+  border: none;
+  background: #d9d9d9;
+  color: #222;
+  padding: 10px 0;
+  width: 40%;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 3px;
+  float: left;
+
+}
+
+.updateaddbutt {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  border: none;
+  background: #d9d9d9;
+  color: #222;
+  padding: 10px 0;
+  width: 40%;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 3px;
+  overflow: hidden;
+
+}
+
+.databasepreview {
+  width: 85%;
+  background-color: #eeeeee;
+  box-shadow: 0 0 8px rgba(250, 250,250,0.6);
+  opacity: 100%;
+  margin: auto;
+}
+
+table {
+  align-items: center;
+  text-align: center;
+  min-height: 80vh;
+  justify-content: center;
+  table-layout: fixed;
+}
+
+.modal-backdrop {
+  z-index: -1;
+}
+    </style>
+</head>
+<body>
+<div class="ovmain">
+    <h1>EVENTS</h1>
+    <div class="databasepreview">
+        <br>
+        <div style="text-align: left; padding-left: 60%; font-size: 150%">
+            {% if count == 0 %}
+        <p>There are no events.</p>
+        {% elif count == 1 %}
+        <p>There is 1 event.</p>
+        {% else %}
+        <p>There are {{ count }} events.</p>
+        {% endif %}
+        </div>
+    </div>
+<table class="table table-striped" style="width: 85%; margin: auto;">
+  <thead style=" background: #eeeeee;">
+    <tr>
+    <th>Event Name</th>
+    <th>Event Date</th>
+    <th>Event Tag</th>
+    <th>Event Description</th>
+    <th>Status</th>
+    <th>Date Created</th>
+    <th>Register</th>
+  </tr>
+</thead>
+    <tbody style="background: white;">
+  {% for event in events_list %}
+  <tr>
+      <td style="overflow:hidden;">{{ event.get_title_name() }}</td>
+      <td>{{ event.get_event_date() }}</td>
+      <td>{{ event.get_tagscategory() }}</td>
+      <td style="overflow:scroll;">
+          <div style="height: 150px;">{{ event.get_event_desc() }}</div>
+      </td>
+      <td>{{ event.get_status() }}</td>
+      <td>{{ event.get_datecreated() }}</td>
+      <td><a href="/CS-eventregister" class="btn btn-warning">Register</a></td>
+  </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

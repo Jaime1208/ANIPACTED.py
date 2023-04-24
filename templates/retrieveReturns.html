@@ -1,0 +1,116 @@
+{% extends "baseCS.html" %}
+{% block title %}ANIPACTED - View Returns{% endblock %}
+
+{% block content %}
+{% if 'return_created' in session %}
+<div class="alert alert-success alert-dismissible">
+ <button type="button" class="close" data-dismiss="alert">&times;</button>
+ {{ session.pop('return_created', None) }} filed for return.
+</div>
+{% elif 'return_updated' in session %}
+<div class="alert alert-warning alert-dismissible">
+ <button type="button" class="close" data-dismiss="alert">&times;</button>
+ {{ session.pop('return_updated', None) }} return details updated.
+</div>
+{% elif 'return_deleted' in session %}
+<div class="alert alert-danger alert-dismissible">
+ <button type="button" class="close" data-dismiss="alert">&times;</button>
+ {{ session.pop('return_deleted', None) }} return deleted.
+</div>
+{% endif %}
+<h1 class="display-4">View Returns</h1>
+<div>
+  {% if count == 0 %}
+  <p>There are no returns.</p>
+  {% elif count == 1 %}
+  <p>There is 1 return.</p>
+  {% else %}
+  <p>There are {{ count }} returns.</p>
+  {% endif %}
+</div>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Return ID</th>
+
+        <th>Name</th>
+        <th>Order ID</th>
+        <th>Return Reason</th>
+        <th>Contact Number</th>
+        <th>Address</th>
+        <th>Return Option</th>
+        <th>Return Date</th>
+        <th>Remarks</th>
+        <th>Return Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for returns in returns_list %}
+        <tr>
+          <td>{{ returns.get_return_id() }}</td>
+
+          <td>{{ returns.get_name() }}</td>
+          <td>{{ returns.get_orderid() }}</td>
+          <td>{{ returns.get_returnreason() }}</td>
+          <td>{{ returns.get_contact() }}</td>
+          <td>{{ returns.get_address() }}</td>
+          {% if returns.get_returnoption() == "P" %}
+            <td>Pickup</td>
+          {% elif returns.get_returnoption() == "D" %}
+            <td>Dropoff</td>
+          {% endif %}
+          <td>{{ returns.get_returndate() }}</td>
+          <td>{{ returns.get_remarks() }}</td>
+          {% if returns.get_status() == "Returned" %}
+            <td><span class="status text-success">&bull;</span>Returned</td>
+          {% elif returns.get_status() == "Filed" %}
+            <td><span class="status text-danger">&bull; </span>Filed</td>
+          {% elif returns.get_status() == "Contacted" %}
+            <td><span class="status text-warning">&bull; </span>Contacted</td>
+          {% endif %}
+          <td><a href="/updateReturn/{{returns.get_return_id()}}" class="btn btn-warning">Update</a></td>
+          <td>
+            <form action="{{url_for('delete_return', id=returns.get_return_id())}}" method="POST">
+<!--              <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{returns.get_return_id()}} ?');">-->
+<!-- Button to Open the Modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal_{{returns.get_return_id()}}">
+  Delete
+</button>
+
+<!-- The Modal -->
+<div class="modal" id="myModal_{{returns.get_return_id()}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Confirmation</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Are you sure you want to delete return {{returns.get_return_id()}}?
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <input type="submit" value="Delete" class="btn btn-danger">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+

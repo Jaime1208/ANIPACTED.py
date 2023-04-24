@@ -1,0 +1,190 @@
+{% extends "baseSTF.html" %}
+{% block title %}ANIPACTED- Customers Overview{% endblock %}
+
+{% block content %}
+ <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anipacted Customer overview</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+.ovmain {
+  width: auto;
+  height: 80%;
+  display: grid;
+  overflow: hidden;
+  background: #231561;
+  padding: none;
+}
+
+.databasepreview {
+  width: 100%;
+  background-color: #eeeeee;
+  box-shadow: 0 0 8px rgba(250, 250,250,0.6);
+  opacity: 100%;
+  margin: auto;
+}
+
+table {
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+  justify-content: center;
+  table-layout: auto;
+}
+
+h1{
+ text-align:center;
+}
+.modal-backdrop {
+  z-index: -1;
+}
+    </style>
+</head>
+<body>
+<div class="ovmain">
+  <div class="databasepreview">
+    {% if 'customer_created' in session %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ session.pop('customer_created', None) }} was created.
+    </div>
+    {% elif 'customer_updated' in session %}
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ session.pop('customer_updated', None) }} was updated.
+    </div>
+    {% elif 'customer_deleted' in session %}
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ session.pop('customer_deleted', None) }} was deleted.
+    </div>    
+    {% endif %}
+    <h1>Customers Overivew</h1>
+    <div style="text-align: left; padding-left: 60%; font-size: 150%">
+        {% if count == 0 %}
+    <p>There are no customers.</p>
+    {% elif count == 1 %}
+    <p>There is 1 customer.</p>
+    {% else %}
+    <p>There are {{ count }} customers.</p>
+    {% endif %}
+    </div>
+  </div>
+  <table class="table table-striped" style="width:100%; margin:auto;">
+    <thead style=" background: #eeeeee; text-align: center;">
+      <tr>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Birthday</th>
+        <th>Occupation</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Date Created</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+         <tbody style="background: white;">
+      {% for customer in customers_list %}
+      <tr>
+          <td>{{ customer.get_name() }}</td>
+          <td>{{ customer.get_gender() }}</td>
+          <td>{{ customer.get_birthday() }}</td>
+          <td>{{ customer.get_occupation() }}</td>
+          <td>{{ customer.get_phone_number() }}</td>
+          <td>{{ customer.get_email() }}</td>
+          <td>{{ customer.get_address() }}</td>
+          <td>{{ customer.get_datecreated() }}</td>
+          <td>{{ customer.get_status() }}</td>
+          <td><a href="/updateCustomer/{{customer.get_customer_id()}}" class="btn btn-warning">Update</a></td>
+          <td>
+            <form action="{{url_for('CustomerStatusActivate', id=customer.get_customer_id())}}" method="POST">
+
+                <!-- Button to Open the Modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#myModal_{{customer.get_customer_id()}}">
+                    Activate
+                </button>
+
+                <!-- The Modal -->
+                <div class="modal" id="myModal_{{customer.get_customer_id()}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: black;">
+                                    Confirm Status Change</h4>
+                                <button type="button" class="btn-close"
+                                        data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body" style="color: black;">
+                                Are you sure you want to activate  {{customer.get_name()}}
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <input type="submit" value="Activate" class="btn btn-primary">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </td>
+        <td>
+            <form action="{{url_for('CustomerStatus', id=customer.get_customer_id())}}" method="POST">
+
+                <!-- Button to Open the Modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#myModal2_{{customer.get_customer_id()}}">
+                    Disable
+                </button>
+
+                <!-- The Modal -->
+                <div class="modal" id="myModal2_{{customer.get_customer_id()}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: black;">
+                                    Confirm Status Change</h4>
+                                <button type="button" class="btn-close"
+                                        data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body" style="color: black;">
+                                Are you sure you want to disable {{customer.get_name()}}
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <input type="submit" value="Disable" class="btn btn-danger">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </td>
+    </tr>
+            {% endfor %}
+      </tbody>
+  </table>
+</div>
+</body>
+{% endblock %}
+

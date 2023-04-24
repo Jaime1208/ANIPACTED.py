@@ -1,0 +1,167 @@
+{% extends "baseSTF.html" %}
+{% block title %}ANIPACTED - Events{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anipacted Staff Events Overview</title>
+    <style>
+.ovmain {
+  width: auto;
+  height: 100%;
+  display: grid;
+  overflow: hidden;
+  padding: none;
+}
+
+.butt {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  margin-left: 30px;
+  border: none;
+  background: #d9d9d9;
+  color: #222;
+  padding: 10px 0;
+  width: 40%;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 3px;
+  float: left;
+
+}
+
+.updateaddbutt {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  border: none;
+  background: #d9d9d9;
+  color: #222;
+  padding: 10px 0;
+  width: 40%;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 3px;
+  overflow: hidden;
+
+}
+
+.databasepreview {
+  width: 85%;
+  background-color: #eeeeee;
+  opacity: 100%;
+  margin: auto;
+}
+
+table {
+  align-items: center;
+  text-align: center;
+  min-height: 40vh;
+  justify-content: center;
+  table-layout: fixed;
+}
+th { text-align: center;
+}
+
+
+.modal-backdrop {
+  z-index: -1;
+}
+    </style>
+</head>
+<body>
+<div class="ovmain">
+    {% if 'event_created' in session %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ session.pop('event_created', None) }} was created.
+    </div>
+    {% elif 'event_updated' in session %}
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ session.pop('event_updated', None) }} was updated.
+    </div>
+    {% elif 'staff_deleted' in session %}
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ session.pop('event_deleted', None) }} was deleted.
+    </div>
+    {% endif %}
+    <h1>EVENTS</h1>
+    <div class="databasepreview">
+        <button class="butt"><a href="/STF-addevents">ADD NEW EVENT</a></button>
+        <br>
+        <div style="text-align: left; padding-left: 60%; font-size: 150%">
+            {% if count == 0 %}
+        <p>There are no events.</p>
+        {% elif count == 1 %}
+        <p>There is 1 event.</p>
+        {% else %}
+        <p>There are {{ count }} events.</p>
+        {% endif %}
+        </div>
+    </div>
+<table class="table table-striped" style="width: 85%; margin: auto;">
+  <thead style=" background: #eeeeee;">
+    <tr>
+    <th>Event Name</th>
+    <th>Event Date</th>
+    <th>Event Tag</th>
+    <th>Event Description</th>
+    <th>Status</th>
+    <th>Date Created</th>
+    <th>Edit Events</th>
+    <th>Delete Events</th>
+  </tr>
+</thead>
+    <tbody style="background: white;">
+  {% for event in events_list %}
+  <tr>
+      <td style="overflow:hidden;">{{ event.get_title_name() }}</td>
+      <td>{{ event.get_event_date() }}</td>
+      <td>{{ event.get_tagscategory() }}</td>
+      <td style="overflow:scroll;">
+          <div style="height: 50px">{{ event.get_event_desc() }}</div>
+      </td>
+      <td>{{ event.get_status() }}</td>
+      <td>{{ event.get_datecreated() }}</td>
+      <td><a href="/STF-updateevents/{{event.get_event_id()}}" class="btn btn-warning">Update</a></td>
+      <td>
+          <form action="{{url_for('delete_events', id=event.get_event_id())}}" method="POST">
+              <!-- Button to Open the Modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal_{{event.get_event_id()}}">
+    Delete
+    </button>
+  <!-- The Modal -->
+
+  <div class="modal"  id="myModal_{{event.get_event_id()}}">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                  <h4 class="modal-title">Delete Confirmation</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                Are you sure you want to delete {{event.get_title_name()}} ?
+            </div>
+            <!-- Modal footer -->
+              <div class="modal-footer">
+                  <input type="submit" value="Delete" class="btn btn-danger">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  </form>
+  </td>
+  </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

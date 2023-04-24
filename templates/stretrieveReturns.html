@@ -1,0 +1,73 @@
+{% extends "baseSTF.html" %}
+{% block title %}ANIPACTED - View Returns{% endblock %}
+
+{% block content %}
+{% if 'return_updated' in session %}
+<div class="alert alert-warning alert-dismissible">
+ <button type="button" class="close" data-dismiss="alert">&times;</button>
+ {{ session.pop('return_updated', None) }} return details updated.
+</div>
+{% endif %}
+<div style="background-color:white;">
+<h1 class="display-4">View Returns</h1>
+<div>
+  {% if count == 0 %}
+  <p>There are no returns.</p>
+  {% elif count == 1 %}
+  <p>There is 1 return.</p>
+  {% else %}
+  <p>There are {{ count }} returns.</p>
+  {% endif %}
+</div>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Return ID</th>
+
+        <th>Name</th>
+        <th>Order ID</th>
+        <th>Return Reason</th>
+        <th>Contact Number</th>
+        <th>Address</th>
+        <th>Return Option</th>
+        <th>Return Date</th>
+        <th>Remarks</th>
+        <th>Return Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for returns in returns_list %}
+        <tr>
+          <td>{{ returns.get_return_id() }}</td>
+
+          <td>{{ returns.get_name() }}</td>
+          <td>{{ returns.get_orderid() }}</td>
+          <td>{{ returns.get_returnreason() }}</td>
+          <td>{{ returns.get_contact() }}</td>
+          <td>{{ returns.get_address() }}</td>
+          {% if returns.get_returnoption() == "P" %}
+            <td>Pickup</td>
+          {% elif returns.get_returnoption() == "D" %}
+            <td>Dropoff</td>
+          {% endif %}
+          <td>{{ returns.get_returndate() }}</td>
+          <td>{{ returns.get_remarks() }}</td>
+          {% if returns.get_status() == "Returned" %}
+            <td>Returned</td>
+          {% elif returns.get_status() == "Filed" %}
+            <td><span class="status text-danger">&bull; </span>Filed</td>
+          {% elif returns.get_status() == "Contacted" %}
+            <td><span class="status text-success">&bull; </span>Contacted</td>
+          {% endif %}
+          <td><a href="/stupdateReturn/{{returns.get_return_id()}}" class="btn btn-warning">Update</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+{% endblock %}
+
+

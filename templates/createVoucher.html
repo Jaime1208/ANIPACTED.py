@@ -1,0 +1,133 @@
+{% extends "baseSTF.html" %}
+{% block title %}ANIPACTED - Rewards{% endblock %}
+
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<html>
+<head>
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>ADD REWARD</title>
+    <style>
+/* form and text*/
+
+.formholder {
+background: #231561;
+padding: 40px;
+}
+
+.editaddvouchers {
+  width: 80%;
+  background-color: #eeeeee;
+  box-shadow: 0 0 8px rgba(250, 250,250,0.6);
+  opacity: 100%;
+  margin: auto;
+}
+
+.editaddvouchers form {
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 80px;
+}
+
+  .inputsegment {
+    width: 40%;
+    height: 40px;
+    margin: 4px 0;
+    border: 1px solid #5c5c5c;
+    border-radius: 3px;
+    background: #d9d9d9;
+    padding: 0 15px;
+    padding-right: 45px;
+    font-size: 15px;
+
+  }
+
+  .inputsegmenttextbox {
+    font-family: 'Poppins', sans-serif;
+    height: 100px;
+    width: 80%;
+    margin: 4px 0;
+    font-size: 20px;
+    padding: 5px 15px;
+    border-radius: 3px;
+    background: #d9d9d9;
+    border: 1px solid #5c5c5c;
+
+  }
+
+.addbutt {
+  margin-top: 5px;
+  border: none;
+  background: #d9d9d9;
+  color: #222;
+  padding: 10px 0;
+  width: 30%;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 3px;
+  float: right;
+
+}
+
+.backbutt {
+  margin-bottom: 20px;
+  border: none;
+  background: #d9d9d9;
+  padding: 3px 0;
+  width: 20%;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 3px;
+  color: inherit;
+}
+
+a {
+    color: #0060B6;
+    text-decoration: none;
+}
+
+    </style>
+</head>
+<body>
+<div class="formholder">
+    <div class="editaddvouchers">
+        <form method="post">
+            <div>
+                <button class="backbutt"><a href="javascript:history.back()">BACK</a></button>
+            </div>
+              <div class="form-group">
+                {{ render_field(form.picture, class="form-control") }}
+              </div>
+              <div class="form-group">
+                {{ render_field(form.name, class="form-control") }}
+              </div>
+              <div class="form-group">
+                {{ render_field(form.type, class="form-control") }}
+              </div>
+              <div class="form-group">
+                {{ render_field(form.amount, class="form-control") }}
+              </div>
+              <div class="form-group">
+                {{ render_field(form.min_spend, class="form-control") }}
+              </div>
+              <div class="form-group">
+                {{ render_field(form.expiry, class="form-check") }}
+              </div>
+              <div id="prof">
+                <div class="form-group">
+                  {{ render_field(form.description, class="form-control") }}
+                </div>
+              </div>
+            <div class="form-group">
+                {{ render_field(form.status, class="form-check", style="list-style-type:none")}}
+            </div>
+            <button type="submit" class="addbutt">Add Voucher</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

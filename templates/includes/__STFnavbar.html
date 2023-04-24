@@ -1,0 +1,226 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://kit.fontawesome.com/2b23a1c7d8.js" crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+    <style>
+    body{
+    background-color:#231651;
+    }
+
+    #flipkart-navbar {
+    background-color: #6CA06F;
+    color: #3E363F;
+    }
+
+    .row1{
+    padding-top: 10px;
+    }
+
+    .row2 {
+    padding-bottom: 20px;
+    }
+
+    .flipkart-navbar-input {
+    padding: 11px 16px;
+    border-radius: 2px 0 0 2px;
+    border: 0 none;
+    outline: 0 none;
+    font-size: 15px;
+    }
+
+    .flipkart-navbar-button {
+    background-color: #B5E9D2;
+    border: 1px solid #B5E9D2;
+    border-radius: 0 2px 2px 0;
+    color: #565656;
+    padding: 10px 0;
+    height: 43px;
+    cursor: pointer;
+    }
+    .item-number {
+    border-radius: 3px;
+    background-color: #B5E9D2;
+    height: 20px;
+    padding: 3px 6px;
+    font-weight: 500;
+    display: inline-block;
+    color: #3E363F;
+    line-height: 20px;
+    margin-left: 10px;
+    }
+    .cart-button {
+    background-color: #B5E9D2;
+    box-shadow: 0 2px 0 #B5E9D2;
+    padding: 10px 0;
+    text-align: center;
+    height: 41px;
+    border-radius: 2px;
+    font-weight: 500;
+    width: 120px;
+    display: inline-block;
+    color: #000000;
+    text-decoration: none;
+    color: inherit;
+    border: none;
+    outline: none;
+    }
+    .cart-button:hover{
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    }
+    .cart-svg {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 8px;
+    }
+
+    .upper-links {
+    float: right;
+    display: flex;
+    padding: 0 11px;
+    line-height: 23px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 0;
+    color: #3E363F;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    }
+
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0px;
+    }
+
+    .dropdown:hover {
+    background-color: #fff;
+    }
+
+    .dropdown:hover .links {
+    color: #3E363F;
+    }
+
+    .dropdown:hover .dropdown-menu {
+    display: block;
+    }
+
+    .dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    display: none;
+    background-color:#B5E9D2;
+    color: #333;
+    left: 0px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 4px 8px -3px #555454;
+    margin: 0;
+    padding: 0px;
+    }
+
+    .links {
+    color: #000000;
+    text-decoration: none;
+    }
+
+    .links:hover {
+    color: #fff;
+    text-decoration: none;
+    }
+
+    .profile-links {
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    border-bottom: 1px solid #e9e9e9;
+    box-sizing: border-box;
+    display: block;
+    padding: 0 11px;
+    line-height: 23px;
+    }
+
+    .profile-li{
+    padding-top: 2px;
+    }
+
+    .largenav {
+    display: flex;
+    }
+
+    .smallnav{
+    display: flex;
+    }
+
+    .smallsearch{
+    margin-left: 15px;
+    margin-top: 15px;
+    }
+
+    .menu{
+    cursor: pointer;
+    }
+
+    @media screen and (min-width: 768px) {
+        .largenav {
+        display: block;
+        }
+        .smallnav{
+        display: none;
+        }
+        .smallsearch{
+        margin: 0px;
+        }
+    }
+    </style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<div id="flipkart-navbar">
+    <div class="container">
+        <div class="row row1">
+            <ul class="largenav pull-right">
+                <li class="upper-links dropdown"><a class="links" href="#"><i class="fa-solid fa-bars" style="font-size:20px"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="profile-li"><a class="profile-links" href="/createStaff">Add Staff</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/StaffOverview">Retrieve Staff</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/CustomersOverview">Retrieve Customer</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/STF-eventsoverview1">Events</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/createVoucher">Add Vouchers</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/retrieveVouchers">Retrieve Vouchers</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/">Products</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/stretrieveReturns">Returns</a></li>
+                    </ul>
+                <li class = "upper-links dropdown"><a class = "links" href = "#"><i class="fa-regular fa-circle-user" style="font-size:20px"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="profile-li"><a class="profile-links" href="{{ url_for('edit_stf_profile',id=session['staff_id']) }}">View Profile</a></li>
+                        <li class="profile-li"><a class="profile-links" href="/logout">Log out</a></li>
+                    </ul>
+                 </li>
+                 <li class="upper-links"><a class="links" href="/"><i class="fa-regular fa-bell" style="font-size:20px"></i></a></li>
+                 <li class="upper-links"><a class="links" href="/"><i class="fa fa-comment-o" style="font-size:20px"></i></a></li>
+            </ul>
+        </div>
+        <div class="row row2">
+            <div class="col-sm-3">
+                <a class="links" href="/homeSTF"><h1 style="margin:0px;"><span class="largenav">ANIPACTED</span></h1></a>
+            </div>
+            <div class="flipkart-navbar-search smallsearch col-sm-8 col-xs-11">
+                <div class="row">
+                    <form>
+                    <input class="flipkart-navbar-input col-xs-11" type="text" placeholder="Search for Products, Brands and more" name="search">
+                    <button class="flipkart-navbar-button col-xs-1" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<!--display: inline-block;-->
